@@ -10,13 +10,14 @@ class plane{
   //member variables
   vector< pair<int, int> > points; //contains points
   //member functions
+  float determinant(pair<int, int> mtrx [3]);
 public:
   void populate(string fname);
 };
 
 void plane::populate(string fname){
 
-  int pointnum;
+  int pointnum; //total number of points
   pair <int, int> point; //contains x and y
 
   ifstream file (fname.c_str());
@@ -31,6 +32,15 @@ void plane::populate(string fname){
   }
   else cout << "failed to open file" << endl;
   sort (points.begin(), points.end()); //overloaded by <utility>
+}
+
+float plane::determinant(pair<int, int> mtrx [3]){
+  
+  float dtr; //result
+
+  dtr = (mtrx[0].first*mtrx[1].second) + (mtrx[1].first*mtrx[2].second) + (mtrx[2].first*mtrx[0].second) - (mtrx[2].first*mtrx[1].second) - (mtrx[1].first*mtrx[0].second) - (mtrx[0].first*mtrx[2].second);
+
+  return dtr;
 }
 
 int main(){
