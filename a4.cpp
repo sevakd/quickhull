@@ -10,7 +10,6 @@ class plane{
   //member variables
   vector< pair<int, int> > points; //contains points
   //member functions
-  float determinant(pair<int, int> mtrx [3]);
 public:
   void populate(string fname);
 };
@@ -34,7 +33,7 @@ void plane::populate(string fname){
   sort (points.begin(), points.end()); //overloaded by <utility>
 }
 
-float plane::determinant(pair<int, int> mtrx [3]){
+float determinant(pair<int, int> mtrx [3]){
   
   float dtr; //result
 
