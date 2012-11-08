@@ -29,7 +29,7 @@ void plane::populate(string fname){
 
 void hull::divide(){
   
-  hull lower, upper;
+  hull lower, upper; //upper and lower sections
 
   int dtrm;
   pair <int, int> mtrxsend [3] = {points.front(), points.back()};
@@ -47,8 +47,6 @@ void hull::divide(){
     dtrm = determinant(mtrxsend);
 
     if(dtrm>0){
-      //cout << it->first << it->second << endl;
-
       upper.points.push_back(*it);} //upper hull
     else if(dtrm<0){
       lower.points.push_back(*it);} //lower hull
@@ -96,13 +94,13 @@ void hull::convexify(pair <int, int> A, pair <int, int> B, hull toCheck){
   hull nextCheck, nextCheckTwo;
 
   pair <int, int> maxPoint = findMax(A, B, toCheck);
-  //cout << maxPoint.first << maxPoint.second << endl;
+  convex.push_back(maxPoint);
 
   pair <int, int> mtrxsend [3] = {A, maxPoint};
   vector< pair<int, int> >::iterator it;
   for (it=toCheck.points.begin(); it<toCheck.points.end(); ++it){
     if (*it==maxPoint){
-      convex.push_back(*it);
+      //convex.push_back(*it);
       continue;
     }
     mtrxsend[2] = *it;
@@ -121,7 +119,6 @@ void hull::convexify(pair <int, int> A, pair <int, int> B, hull toCheck){
   vector< pair<int, int> >::iterator i;
   for (i=toCheck.points.begin(); i<toCheck.points.end(); ++i){
     if (*i==maxPoint){
-      //convex.push_back(*i);
       continue;
     }
     mtrxsendTwo[2] = *i;
@@ -141,6 +138,8 @@ void hull::convexify(pair <int, int> A, pair <int, int> B, hull toCheck){
 }
 
 int main(){
+  clock_t begin, end;
+  begin = clock();
   hull one;
  
   string filename;
@@ -148,6 +147,9 @@ int main(){
   
   one.populate(filename);
   one.divide();
+  end = clock();
+  double tr = (end-begin)/(double) CLOCKS_PER_SEC;
+  cout << "time: " << tr << endl;
   
   for (vector< pair <int, int> >::iterator i = one.convex.begin(); i != one.convex.end(); ++i)
   {
